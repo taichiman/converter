@@ -1,19 +1,41 @@
 require 'convertor.v3'
 
-STUFF_DIR  = File.join(Dir.pwd,'spec/stuff')
+RUN_DIR  = File.join(Dir.pwd,'spec/stuff/run')
+ORIGIN_DIR = File.join(Dir.pwd,'spec/stuff/origin')
 
 describe 'Converter script' do
   context 'the script test' do
+    before :each do
+      FileUtils.rm_r Dir[File.join(RUN_DIR, '*')]
+
+    end
+
     it 'test main workflow' do
       allow(self).to receive(:download_all) do
-        file = File.new(File.join(STUFF_DIR,'doc1.xml'), 'w')
-        file.close
+        FileUtils.cp(File.join(ORIGIN_DIR,'acta-01-12-julio-25-de-2012.pdf'), RUN_DIR)
+
+      end
+
+      allow(self).to receive(:convert_to_txt) do
+        FileUtils.cp(File.join(ORIGIN_DIR,'acta-01-12-julio-25-de-2012.txt'), RUN_DIR)
+
+      end
+
+      allow(self).to receive(:convert_to_xml) do
+        FileUtils.cp(File.join(ORIGIN_DIR,'acta-01-12-julio-25-de-2012.xml'), RUN_DIR)
+
       end
 
       run
 
       expect(self).to have_received(:download_all).once
-      expect(File.exist?(File.join(STUFF_DIR,'doc1.xml'))).to eq true
+      expect(File.exist?(File.join(RUN_DIR,'acta-01-12-julio-25-de-2012.pdf'))).to eq true
+
+      expect(self).to have_received(:convert_to_txt).once
+      expect(File.exist?(File.join(RUN_DIR,'acta-01-12-julio-25-de-2012.txt'))).to eq true
+
+      expect(self).to have_received(:convert_to_xml).once
+      expect(File.exist?(File.join(RUN_DIR,'acta-01-12-julio-25-de-2012.xml'))).to eq true
 
     end
   end
@@ -23,8 +45,8 @@ end
 describe 'test downloading' do
   context 'can download all documents' do
     #download_all_document(url)
-    it 'download 1 doc' do
-      expect(Dir[File.join(STUFF_DIR,'**','*')].count{ |file| File.file? file }).to eq 1
+    xit 'download 1 doc' do
+      expect(Dir[File.join(RUN_DIR,'**','*')].count{ |file| File.file? file }).to eq 1
     end
 
   end
