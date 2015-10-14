@@ -17,7 +17,7 @@ describe 'Converter script' do
       end
 
       allow(self).to receive(:convert_to_txt) do
-        FileUtils.cp(File.join(ORIGIN_DIR,'acta-01-12-julio-25-de-2012.txt'), RUN_DIR)
+        FileUtils.cp(File.join(ORIGIN_DIR,'sample.txt'), RUN_DIR)
 
       end
 
@@ -32,7 +32,7 @@ describe 'Converter script' do
       expect(File.exist?(File.join(RUN_DIR,'acta-01-12-julio-25-de-2012.pdf'))).to eq true
 
       expect(self).to have_received(:convert_to_txt).once
-      expect(File.exist?(File.join(RUN_DIR,'acta-01-12-julio-25-de-2012.txt'))).to eq true
+      expect(File.exist?(File.join(RUN_DIR,'sample.txt'))).to eq true
 
       expect(self).to have_received(:convert_to_xml).once
       expect(File.exist?(File.join(RUN_DIR,'acta-01-12-julio-25-de-2012.xml'))).to eq true
@@ -53,5 +53,17 @@ describe 'test downloading' do
 
 end
 
-#add erase directory with xml result
+describe 'convert to txt' do
+  #it 'convert to txt' do
+
+    ##find - how convert pdf to txt
+
+    #pdf = File.open(File.join(ORIGIN_DIR, 'acta-01-12-julio-25-de-2012.pdf'))
+    #txt = convert_to_txt( pdf )
+
+    #expect(txt#context).to eq pdf
+
+  #end
+
+end
 

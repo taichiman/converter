@@ -1,6 +1,10 @@
 require 'rubygems'
 require 'bundler/setup'
 
+
+require 'rspec/matchers'
+require 'equivalent-xml'
+
 Bundler.require(:default, :development)
 
 RSpec.configure do |config|

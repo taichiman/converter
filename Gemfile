@@ -4,4 +4,7 @@ gem 'rspec'
 gem 'pry'
 gem 'pry-doc'
 gem 'pry-byebug'
+gem 'nokogiri'
+
+gem 'equivalent-xml'
 
